@@ -1,5 +1,11 @@
-.nav-link {
-  font-size: large;
+thead {
+
+      color: #337ab7
+}
+
+button {
+list-style: "margin:9px"
+
 }
 .my-button-style {
   height: 48px;

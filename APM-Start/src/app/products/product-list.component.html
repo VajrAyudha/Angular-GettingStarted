@@ -10,34 +10,70 @@
       <div class='row'>
             <div class='col-md-2'>Filter By</div>
             <div class='col-md-4'>
-                  <input type="text">
+                  <tr>
+                        <td>
+                              <input type="myFilter"
+                                     style="margin:9px"
+                                     [(ngModel)]='listFilter' />
+                              <button class='my-button-style'
+                                      (click)='clearFilter()'> ClearFilter
+                              </button>
+                        </td>
+                  </tr>
             </div>
       </div>
       <div class='row'>
             <div class='col-md-6'>
-                  <h4><b>Filtered By</b></h4>
+                  <h4><b>Filtered By: {{listFilter}}</b></h4>
             </div>
 
       </div>
 </div>
 <div class='table-responsive'>
-      <table class='table'>
+      <table class='table'
+             *ngIf='products && products.length'>
             <thead>
                   <tr>
                         <th>
-                              <button class='btn btn-primary'>
-                                    Show Imaage
+                              <button class='my-button-style'
+                                      (click)='toggleImage()'>
+                                    {{showImage ? 'Hide' : 'Show'}} Image
                               </button>
 
                         </th>
                         <th>Product</th>
                         <th>Code</th>
                         <th>Available</th>
+                        <th>Description</th>
+                        <th>Price</th>
                         <th>Five Star Rating</th>
                   </tr>
             </thead>
             <tbody>
+                  <tr *ngFor='let product of filteredProducts'>
+                        <td>
+                              <img *ngIf='showImage'
+                                   [src]='product.imageUrl'
+                                   [title]='product.productName'
+                                   [style.width.px]='imageWidth'
+                                   [style.margin.px]='imageMargin'>
+                        </td>
+                        <td>{{product.productName}}</td>
+                        <td>{{product.productCode | lowercase | ConvertToSpacesPipe: '-' }}</td>
+                        <td>{{product.releaseDate}}</td>
+                        <td>{{product.description}}</td>
+                        <td>{{product.price | currency :'USD': 'symbol':'1.2-2'}}</td>
+                        <td>
+                              <!--{{product.starRating}}-->
+                              <pm-star
+                                    [rating]='product.starRating'
+                                    (ratingClicked)='onRatingClicked($event)'>
+                              </pm-star>
+                              
+                              
+                        </td>
 
+                  </tr>
             </tbody>
       </table>
 
